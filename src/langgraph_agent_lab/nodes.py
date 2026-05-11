@@ -220,13 +220,13 @@ def retry_or_fallback_node(state: AgentState) -> dict:
     attempt = int(state.get("attempt", 0)) + 1
     max_attempts = int(state.get("max_attempts", 3))
     
-    # Record retry with context
-    errors = state.get("errors", [])
-    errors.append(f"Retry attempt {attempt}/{max_attempts}")
+    # Only return the NEW error message. The 'add' reducer in state.py
+    # will automatically append it to the existing list.
+    new_error = f"Retry attempt {attempt}/{max_attempts}"
     
     return {
         "attempt": attempt,
-        "errors": errors,
+        "errors": [new_error],
         "events": [make_event("retry", "recorded", f"Retry {attempt}/{max_attempts}", attempt=attempt, max_attempts=max_attempts)],
     }
 
