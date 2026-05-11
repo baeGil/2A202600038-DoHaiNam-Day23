@@ -1,3 +1,7 @@
 scenarios_path: data/sample/scenarios.jsonl
-checkpointer: memory
+# Extension: Switch to sqlite for crash-resume demonstration
+# Default is memory (good for lab/CI). Uncomment for persistence.
+checkpointer: sqlite
+database_url: checkpoints.db
+# checkpointer: memory
 report_path: reports/lab_report.md
